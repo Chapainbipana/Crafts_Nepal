@@ -1,6 +1,6 @@
- @include('include.header')
- @include('navbar')
 
+ @extends('layouts.main')
+ @section('content')
 <body>
     <div class="container py-3">
       <div class="d-flex justify-content-between align-items-center mb-4">  
@@ -33,22 +33,37 @@
                         Decor
                     </label>
                 </li>
-                {{-- <li> 
-                    <div class="dropdown-item">
-                        <label for="min_price" class="form-label">Min Price</label>
-                        <input type="number" name="min_price" id="min_price" class="form-control">
-                    </div>
-                </li>
-                <li>
-                    <div class="dropdown-item">
-                        <label for="max_price" class="form-label">Max Price</label>
-                        <input type="number" name="max_price" id="max_price" class="form-control">
-                    </div>
-                </li>
-                --}}
+                
             </ul>
         </div>
-
+        <script>
+          // Get references to all checkboxes and items
+          const checkboxes = document.querySelectorAll('input[name="category"]');
+          const items = document.querySelectorAll('.item');
+      
+          // Function to filter items
+          function filterItems() {
+              // Get selected categories
+              const selectedCategories = Array.from(checkboxes)
+                  .filter(checkbox => checkbox.checked)
+                  .map(checkbox => checkbox.value);
+      
+              // Show or hide items based on selected categories
+              items.forEach(item => {
+                  const itemCategory = item.getAttribute('data-category');
+                  if (selectedCategories.length === 0 || selectedCategories.includes(itemCategory)) {
+                      item.style.display = ''; // Show item
+                  } else {
+                      item.style.display = 'none'; // Hide item
+                  }
+              });
+          }
+      
+          // Add event listener to all checkboxes
+          checkboxes.forEach(checkbox => {
+              checkbox.addEventListener('change', filterItems);
+          });
+      </script>
         <div class="dropdown">
             <button
                 class="btn btn-outline-secondary dropdown-toggle"
@@ -208,7 +223,7 @@
             </div>
           </div>
       </div>
+   @endsection 
    
-    @include('include.footer')
     
      
